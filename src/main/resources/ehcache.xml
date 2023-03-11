@@ -1,0 +1,35 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.ehcache.org/v3"
+	xmlns:jsr107="http://www.ehcache.org/v3/jsr107"
+	xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.0.xsd
+						http://www.ehcache.org/v3/jsr107 http://www.ehcache.org/schema/ehcache-107-ext-3.0.xsd">
+	<cache alias="product">
+		<key-type>java.lang.String</key-type>
+		<value-type>com.springbootcachedemo.model.Product</value-type>
+		<expiry>
+			<!--Time to live,here it is 30sec-->
+			<!--How much time a data can be in cache-->
+			<!--After 30sec , data is removed and idf request comes, it will be cache
+			miss and data fetched from database-->
+			<ttl unit="seconds">30</ttl>
+		</expiry>
+		<!--We can create customeListners like when the cache get created,
+		whencache gets updated-->
+		<listeners>
+			<listener>
+				<class>com.springbootcachedemo.listener.CuctomCacheEventListener</class>
+				<event-firing-mode>ASYNCHRONOUS</event-firing-mode>
+				<event-ordering-mode>UNORDERED</event-ordering-mode>
+				<events-to-fire-on>CREATED</events-to-fire-on>
+				<events-to-fire-on>EXPIRED</events-to-fire-on>
+			</listener>
+		</listeners>
+		<!--ehcache has a feature to store the objects on disc, if memory overflow
+In this example, 2000 objects are stored in memory, if exceeds beyond
+2000, 1000MB can be stored on disc -->
+		<resources>
+			<heap unit="entries">2000</heap>
+			<offheap unit="MB">1000</offheap>
+		</resources>
+	</cache>
+</config>

@@ -1,5 +1,7 @@
 package com.springbootcachedemo.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="products")
-public class Product {
+public class Product implements Serializable {
 
 	@Id
 	@Column(name="product_id")
